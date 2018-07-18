@@ -1,6 +1,6 @@
 import { GET, POST } from './lib/ajax';
 
-const globalApiUrl = 'http://hyncao.com';
+export const globalApiUrl = 'http://hyncao.com';
 
 // 上传图片
 export const uploadPic = (pics) => POST(`${globalApiUrl}/api/data/upload`, pics);

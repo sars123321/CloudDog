@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
 import loading from '../asset/loading.svg';
 import utils from '../lib/utils';
-import { picList } from '../api';
+import { globalApiUrl, picList } from '../api';
 
 class Item extends Component {
 	constructor(props) {
@@ -12,9 +12,9 @@ class Item extends Component {
 	zoom() {
     const { url, list } = this.props;
     const _list = list.map(item => {
-      return item.url;
+      return globalApiUrl + item.url;
     })
-		utils.zoom(url, _list);
+		utils.zoom(globalApiUrl + url, _list);
 	}
 	render() {
 		const { thumb } = this.props;
@@ -40,17 +40,17 @@ class PicList extends Component {
       pending: false,
       pageIndex: 1,
       totalPage: 2,
-			pics: []
+			pics: [],
     }
     this.getList = this.getList.bind(this);
   }
   componentDidMount() {
     this.init();
-    utils.scrollEnd(this.getList, this);
   }
   init() {
     const { pageIndex } = this.state;
     this.getList(pageIndex);
+    utils.scrollEnd(this.getList, this);
   }
   async getList(pageIndex) {
     this.setState({pending: true});
@@ -64,6 +64,7 @@ class PicList extends Component {
     } else {
       alert(result.message);
     }
+    this.setState({pending: false});
   }
 	render() {
 		const { pending, pics } = this.state;
