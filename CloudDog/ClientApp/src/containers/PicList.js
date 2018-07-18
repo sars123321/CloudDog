@@ -52,7 +52,7 @@ class PicList extends Component {
     utils.scrollEnd(this.getList);
   }
   async getList() {
-    const { pending, pageIndex, totalPage } = this.state;
+    const { pending, pageIndex, totalPage, pics } = this.state;
     if (pending || pageIndex > totalPage) {
       return;
     }
@@ -61,7 +61,7 @@ class PicList extends Component {
     if (result.code === 0) {
       this.setState({
         totalPage: result.totalPage,
-        pics: result.items,
+        pics: [...pics, result.items],
       })
     } else {
       alert(result.message);
