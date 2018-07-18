@@ -132,12 +132,16 @@ const utils = {
   * @param fix 修正值，即距离底部fix即可触发fn
   * @param target 滚动的容器dom
   */
-  scrollEnd: (fn, param = null, fix = 100, target = window) => {
+  scrollEnd: (fn, that, fix = 100, target = window) => {
+    const { pending, pageIndex } = that.state.pageIndex;
     target.onscroll = () => {
+      if (pending) {
+        return;
+      }
       const body = document.getElementsByTagName('body')[0];
       if (body.scrollHeight - (document.documentElement.scrollTop ||
         document.body.scrollTop) <= target.innerHeight + fix) {
-        fn(param);
+        fn(pageIndex);
       }
     }
   },

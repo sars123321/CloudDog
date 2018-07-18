@@ -21,7 +21,7 @@ const networkError = () => {
   } else {
     window.throttle = new Date();
   }
-  return {code: 0, msg: '网络异常'}
+  return {code: 1, message: '网络异常'}
 }
 
 /**
@@ -31,7 +31,7 @@ const networkError = () => {
  * @param method 请求方式
  */
 function commonFetcdh(url, options, method = 'GET') {
-  const searchStr = obj2String(options)
+  const searchStr = options instanceof FormData? options: obj2String(options);
   let initObj = {}
   if (method === 'GET') { // 如果是GET请求，拼接url
     url += `?t=${Math.random()}&${searchStr}`;
