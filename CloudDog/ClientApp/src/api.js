@@ -1,6 +1,9 @@
 import { GET, POST } from './lib/ajax';
 
-const globalApiUrl = 'http://localhost:51459';
+const globalApiUrl = 'http://hyncao.com';
 
-// 请求地址是相对/src目录的
-export const uploadPic = (pics) => POST(`${globalApiUrl}/api/data/upload`, {pics})
+// 上传图片
+export const uploadPic = (pics) => POST(`${globalApiUrl}/api/data/upload`, pics);
+
+// 图片列表
+export const picList = (obj) => GET(`${globalApiUrl}/api/data/getlist`, obj);

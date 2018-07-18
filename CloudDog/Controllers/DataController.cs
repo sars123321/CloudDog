@@ -30,7 +30,7 @@ namespace CloudDog.Controllers
         {
             ImageModel model = new ImageModel()
             {
-                Items = new List<Image>(),
+                Items = new List<ImageExt>(),
                 PageIndex = pageIndex,
                 PageSize = PageSize,
                 TotalCount = 0,
@@ -41,8 +41,19 @@ namespace CloudDog.Controllers
             {
                 List<Image> images = new List<Image>();
                 images = _context.Image.OrderByDescending(m => m.CreateTime).Skip((pageIndex - 1) * PageSize).Take(PageSize).ToList();
-                model.Items = images;
+                foreach(var item in images)
+                {
+                    model.Items.Add(new ImageExt
+                    {
+                        CreateTime = item.CreateTime,
+                        Id = item.Id,
+                        Thumb = item.Url.Replace(".","_thumb."),
+                        Url = item.Url,
+                        Type = item.Type
+                    });
+                }
                 model.TotalCount = _context.Image.Count();
+                model.TotalPage = (int)Math.Ceiling((decimal)model.TotalCount / (decimal)PageSize);
                 model.Code = 0;
                 model.Message = string.Empty;
             }
@@ -68,13 +79,13 @@ namespace CloudDog.Controllers
                 }
                 else
                 {
-                    string webRoot = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp\\public");
+                    string webRoot = Path.Combine(Directory.GetCurrentDirectory());
                     foreach (var file in files)
                     {
-                        if (!file.FileName.Contains("jpg") && !file.FileName.Contains("gif") && !file.FileName.Contains("png") && !file.FileName.Contains("mp4"))
+                        if (!file.FileName.Contains("jpeg") && !file.FileName.Contains("jpg") && !file.FileName.Contains("gif") && !file.FileName.Contains("png") && !file.FileName.Contains("mp4"))
                         {
                             model.Code = 1;
-                            model.Message = "上传格式不正确";
+                            model.Message = "上传格式不正确" + file.FileName;
                             break;
                         }
                         else
@@ -88,8 +99,8 @@ namespace CloudDog.Controllers
                             {
                                 type = 2;
                             }
-                            var filename = Guid.NewGuid().ToString().Replace("-", "") + "." + file.FileName;
-                            string filePath = webRoot + "\\upload\\" + filename;
+                            var filename = Guid.NewGuid().ToString().Replace("-", "") + "-" + file.FileName;
+                            string filePath = webRoot + "/ClientApp/build/upload/" + filename;
 
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
@@ -130,10 +141,16 @@ namespace CloudDog.Controllers
 
         public class ImageModel : BaseModel
         {
-            public List<Image> Items { get; set; }
+            public List<ImageExt> Items { get; set; }
             public int PageIndex { get; set; }
             public int PageSize { get; set; }
             public int TotalCount { get; set; }
+            public int TotalPage { get; set; }
+        }
+
+        public class ImageExt : Image
+        {
+            public string Thumb { get; set; }
         }
     }
 }
