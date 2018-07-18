@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CloudDog.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
 
 namespace CloudDog
 {
@@ -62,6 +63,7 @@ namespace CloudDog
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+
 
             app.UseSpa(spa =>
             {

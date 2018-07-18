@@ -44,10 +44,10 @@ function commonFetcdh(url, options, method = 'GET') {
     initObj = {
       method: method,
       credentials: 'include',
-      headers: new Headers({
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }),
+      //headers: new Headers({
+      //  'Accept': 'application/json',
+      //  'Content-Type': 'application/x-www-form-urlencoded'
+      //}),
       body: searchStr,
       mode: 'cors'
     }

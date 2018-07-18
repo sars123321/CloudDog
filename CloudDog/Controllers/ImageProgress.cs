@@ -14,7 +14,7 @@ namespace CloudDog.Controllers
 
         public void Thumb(Stream source, string path)
         {
-            path += "_thumb";
+            path = path.Replace(".", "_thumb.");
             Image image = Image.FromStream(source);
             int width = image.Width;
             int height = image.Height;
