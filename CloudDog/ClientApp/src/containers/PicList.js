@@ -25,7 +25,7 @@ class Item extends Component {
 				once
 			>
 				<img
-					alt="哈啤" style={{display: 'block', width: '100%'}} src={thumb}
+					alt="哈啤" style={{display: 'block', width: '100%', margin: '.1rem 0'}} src={thumb}
 					onClick={this.zoom}
 				/>
 			</LazyLoad>
@@ -48,16 +48,18 @@ class PicList extends Component {
     this.init();
   }
   init() {
-    const { pageIndex } = this.state;
-    this.getList(pageIndex);
-    utils.scrollEnd(this.getList, this);
+    this.getList();
+    utils.scrollEnd(this.getList);
   }
-  async getList(pageIndex) {
-    this.setState({pending: true});
+  async getList() {
+    const { pending, pageIndex, totalPage } = this.state;
+    if (pending || pageIndex > totalPage) {
+      return;
+    }
+    this.setState({pending: true, pageIndex: pageIndex +1});
     const result = await picList({pageIndex});
     if (result.code === 0) {
       this.setState({
-        pageIndex: pageIndex + 1,
         totalPage: result.totalPage,
         pics: result.items,
       })
@@ -67,9 +69,9 @@ class PicList extends Component {
     this.setState({pending: false});
   }
 	render() {
-		const { pending, pics } = this.state;
+		const { pageIndex, totalPage, pending, pics } = this.state;
 		return (
-			<div>
+			<div style={{padding: '0 .2rem', overflow: 'hidden'}}>
 				{pics && pics.map((item, i) => (
 					<Item thumb={item.thumb} url={item.url} list={pics} key={i} />
 				))}
@@ -77,7 +79,11 @@ class PicList extends Component {
           <div style={{textAlign: 'center', color: '#b4cdf1', fontSize: '.14rem'}}>
             <img style={{width: '20%', verticalAlign: 'center'}} src={loading} />
             <span style={{verticalAlign: 'center'}}>玩命加载中</span>
-          </div>}
+          </div>
+        }
+        {pageIndex > totalPage &&
+          <div style={{textAlign: 'center', fontSize: '.16rem'}}>没图了，再去上传点吧 =。=</div>
+        }
 			</div>
 		)
 	}
