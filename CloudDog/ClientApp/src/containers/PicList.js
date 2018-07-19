@@ -82,7 +82,7 @@ class PicList extends Component {
           </div>
         }
         {pageIndex > totalPage &&
-          <div style={{textAlign: 'center', fontSize: '.16rem'}}>没图了，再去上传点吧 =。=</div>
+          <div style={{textAlign: 'center', fontSize: '.16rem', lineHeight: '.5rem', color: '#999'}}>没图了，再去上传点吧 =。=</div>
         }
 			</div>
 		)
