@@ -61,7 +61,7 @@ class PicList extends Component {
     if (result.code === 0) {
       this.setState({
         totalPage: result.totalPage,
-        pics: [...pics, result.items],
+        pics: [...pics, ...result.items],
       })
     } else {
       alert(result.message);
