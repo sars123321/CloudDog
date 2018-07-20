@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import utils from './utils.js'
 
 /**
  * 将对象转成 a=1&b=2的形式

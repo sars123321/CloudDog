@@ -6,3 +6,6 @@ body{background-color: #eee;}
 .mt30{margin-top: .3rem;}
 .mt40{margin-top: .4rem;}
 .autoCenter{margin-left: auto; margin-right: auto;}
+
+/* 禁止页面滚动 */
+.disabledScroll{height: 100% !important; overflow: hidden !important;}

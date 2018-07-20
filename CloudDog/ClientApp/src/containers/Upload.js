@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { uploadPic } from '../api';
 import loading from '../asset/loading.svg';
-import utils from '../lib/utils';
 
 class Upload extends Component {
     constructor(props) {
@@ -64,8 +63,8 @@ class Upload extends Component {
               </div>
             </div>
             <div style={{margin: '.2rem'}}>
-              {backShowArr.length != 0 && backShowArr.map((item, i) => (
-                <img style={{width: '1rem', marginRight: '.2rem', marginBottom: '.2rem'}} src={item} key={i} />
+              {backShowArr.length !== 0 && backShowArr.map((item, i) => (
+                <img style={{width: '1rem', marginRight: '.2rem', marginBottom: '.2rem'}} src={item} key={i} alt="云吸狗" />
               ))}
             </div>
             {pending && 
@@ -74,7 +73,7 @@ class Upload extends Component {
                 backgroundColor: 'rgba(0, 0, 0, .3)', textAlign: 'center'
               }}>
                 <div style={{margin: '50% auto', padding: '.2rem', width: '1.5rem', backgroundColor: '#fff', borderRadius: '.1rem'}}>
-                  <img style={{}} src={loading} />
+                  <img style={{}} src={loading} alt="loading" />
                   <div style={{color: '#b4cdf1', fontSize: '.14rem'}}>正在上传中</div>
                 </div>
               </div>
